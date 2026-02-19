@@ -1,0 +1,28 @@
+[project]
+name = "megalodon"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch",
+    "transformers",
+    "accelerate",
+    # Only install these on Linux (Cloud GPU)
+    "apex @ git+https://github.com/NVIDIA/apex.git@23.08 ; sys_platform == 'linux'",
+    "megalodon @ git+https://github.com/XuezheMax/megalodon ; sys_platform == 'linux'",
+]
+
+[tool.uv.extra-build-dependencies]
+# This ensures torch is available when building apex on the Cloud
+apex = ["torch", "setuptools"]
+
+[[tool.uv.dependency-metadata]]
+name = "apex"
+version = "23.08"
+requires-dist = ["torch", "numpy"]
+
+[[tool.uv.dependency-metadata]]
+name = "megalodon"
+version = "0.1.0"
+requires-dist = ["torch", "transformers", "triton"]
